@@ -29,6 +29,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "TamanhoMarmita.findAll", query = "SELECT t FROM TamanhoMarmita t")})
 public class TamanhoMarmita implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tamanhoMarmitaIdTamanhoMarmita")
+    private List<Marmita> marmitaList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tamanhoMarmita")
     private List<PrecoProduto> precoProdutoList;
 
@@ -101,6 +104,14 @@ public class TamanhoMarmita implements Serializable {
 
     public void setPrecoProdutoList(List<PrecoProduto> precoProdutoList) {
         this.precoProdutoList = precoProdutoList;
+    }
+
+    public List<Marmita> getMarmitaList() {
+        return marmitaList;
+    }
+
+    public void setMarmitaList(List<Marmita> marmitaList) {
+        this.marmitaList = marmitaList;
     }
     
 }

@@ -17,15 +17,15 @@ import java.text.DecimalFormat;
 
 // @author Radames
 public class GUIStatusFuncionarioListagem extends JDialog {
-
+    
     JPanel painelTa = new JPanel();
     JScrollPane scroll = new JScrollPane();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DecimalFormat decimalFormat = new DecimalFormat("###,###,##0.00");
-
+    
     public GUIStatusFuncionarioListagem(List<StatusFuncionario> texto) {
-        setTitle("Listagem de Statusfuncionario");
-        setSize(600,300);//tamanho da janela
+        setTitle("Listagem de Status Funcionario");
+        setSize(300, 200);//tamanho da janela
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);//libera ao sair (tira da memÃ³ria a classe
         setLayout(new BorderLayout());//informa qual gerenciador de layout serÃ¡ usado
         setBackground(Color.CYAN);//cor do fundo da janela
@@ -34,15 +34,15 @@ public class GUIStatusFuncionarioListagem extends JDialog {
 
         JToolBar toolBar = new JToolBar();
         String[] colunas = new String[]{
-            "idStatus", "nomeStatus"};
-
+            "id", "nome"};
+        
         String[][] dados = new String[0][3];
-
+        
         DefaultTableModel model = new DefaultTableModel(dados, colunas);
         JTable tabela = new JTable(model);
-
+        tabela.setEnabled(false);
         scroll.setViewportView(tabela);
-
+        
         for (int i = 0; i < texto.size(); i++) {
             String[] linha = new String[]{
                 String.valueOf(texto.get(i).getIdStatus()), String.valueOf(texto.get(i).getNomeStatus())};
@@ -51,11 +51,16 @@ public class GUIStatusFuncionarioListagem extends JDialog {
 
         // scroll.add(ta);
         painelTa.add(scroll);
-
+        
         cp.add(toolBar, BorderLayout.NORTH);
         cp.add(scroll, BorderLayout.CENTER);
-
+        
         setLocationRelativeTo(null);
         setVisible(true);//faz a janela ficar visÃ­vel        
+    }
+    
+    public static void main(String[] args) {
+        DAOs.DAOStatusFuncionario daoStatusFuncionario = new DAOs.DAOStatusFuncionario();
+        new GUIStatusFuncionarioListagem(daoStatusFuncionario.listInOrderId());
     }
 }

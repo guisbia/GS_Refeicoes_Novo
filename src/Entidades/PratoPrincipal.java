@@ -6,7 +6,9 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +29,11 @@ import javax.persistence.Table;
     @NamedQuery(name = "PratoPrincipal.findAll", query = "SELECT p FROM PratoPrincipal p")})
 public class PratoPrincipal implements Serializable {
 
+    @Column(name = "status")
+    private boolean status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pratoPrincipalIdPratoPrincipal")
+    private List<Marmita> marmitaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +43,6 @@ public class PratoPrincipal implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome_prato_principal")
     private String nomePratoPrincipal;
-    @Column(name = "status")
-    private boolean status;
     @Column(name = "foto_prato_principal")
     private String fotoPratoPrincipal;
 
@@ -70,13 +76,6 @@ public class PratoPrincipal implements Serializable {
         this.nomePratoPrincipal = nomePratoPrincipal;
     }
 
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 
     public String getFotoPratoPrincipal() {
         return fotoPratoPrincipal;
@@ -109,6 +108,22 @@ public class PratoPrincipal implements Serializable {
     @Override
     public String toString() {
         return "Entidades.PratoPrincipal[ idPratoPrincipal=" + idPratoPrincipal + " ]";
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public List<Marmita> getMarmitaList() {
+        return marmitaList;
+    }
+
+    public void setMarmitaList(List<Marmita> marmitaList) {
+        this.marmitaList = marmitaList;
     }
     
 }

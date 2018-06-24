@@ -1,6 +1,6 @@
 package GUIs;
 
-import Entidades.TamanhoMarmita;
+import Entidades.Marmita;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -16,15 +16,15 @@ import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
 
 // @author Radames
-public class GUITamanhoMarmitaListagem extends JDialog {
+public class GUIMarmitaListagem extends JDialog {
 
     JPanel painelTa = new JPanel();
     JScrollPane scroll = new JScrollPane();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DecimalFormat decimalFormat = new DecimalFormat("###,###,##0.00");
 
-    public GUITamanhoMarmitaListagem(List<TamanhoMarmita> texto) {
-        setTitle("Listagem de Tamanho Marmita");
+    public GUIMarmitaListagem(List<Marmita> texto) {
+        setTitle("Listagem de Marmita");
         setSize(600, 200);//tamanho da janela
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);//libera ao sair (tira da memÃ³ria a classe
         setLayout(new BorderLayout());//informa qual gerenciador de layout serÃ¡ usado
@@ -34,7 +34,7 @@ public class GUITamanhoMarmitaListagem extends JDialog {
 
         JToolBar toolBar = new JToolBar();
         String[] colunas = new String[]{
-            "id", "Tamanho"};
+            "Id", "Prato Principal", "Tamanho Marmita", "Status"};
 
         String[][] dados = new String[0][3];
 
@@ -44,8 +44,10 @@ public class GUITamanhoMarmitaListagem extends JDialog {
         scroll.setViewportView(tabela);
 
         for (int i = 0; i < texto.size(); i++) {
+            String nomePratoPrincipal = texto.get(i).getPratoPrincipalIdPratoPrincipal().getNomePratoPrincipal();
+            String tamanhoMarmita = texto.get(i).getTamanhoMarmitaIdTamanhoMarmita().getNomeTamanhoMarmita();
             String[] linha = new String[]{
-                String.valueOf(texto.get(i).getIdTamanhoMarmita()), String.valueOf(texto.get(i).getNomeTamanhoMarmita())};
+                String.valueOf(texto.get(i).getIdMarmita()), nomePratoPrincipal, tamanhoMarmita, String.valueOf(texto.get(i).getStatus())};
             model.addRow(linha);
         }
 
@@ -57,5 +59,10 @@ public class GUITamanhoMarmitaListagem extends JDialog {
 
         setLocationRelativeTo(null);
         setVisible(true);//faz a janela ficar visÃ­vel        
+    }
+
+    public static void main(String[] args) {
+        DAOs.DAOMarmita daoMarmita = new DAOs.DAOMarmita();
+        new GUIMarmitaListagem(daoMarmita.listInOrderId());
     }
 }

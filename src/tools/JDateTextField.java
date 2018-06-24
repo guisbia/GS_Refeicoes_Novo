@@ -36,7 +36,7 @@ public class JDateTextField extends JFormattedTextField {
         }
     }
 
-    JDateTextField() {
+public   JDateTextField() {
         super(formatador);
         setFont(new Font("Courier", Font.PLAIN, 12));
         setColumns(13);

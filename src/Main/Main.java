@@ -5,8 +5,6 @@
  */
 package Main;
 
-import java.awt.Dimension;
-
 /**
  *
  * @author bianc
@@ -17,16 +15,19 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         //GUIs.GUIMenu guiMenu = new GUIs.GUIMenu();
+         GUIs.GUIMenu guiMenu = new GUIs.GUIMenu();
         
         
-        GUIs.GUIStatusFuncionario guiStatusFuncionario = new GUIs.GUIStatusFuncionario();
+        //GUIs.GUIStatusFuncionario guiStatusFuncionario = new GUIs.GUIStatusFuncionario();
         // TODO code application logic here
         //new GUIs.GUIPratoPrincipal();
        //GUIs.GUITamanhoMarmita guiTamanhoMarmita = new GUIs.GUITamanhoMarmita();
         //DAOs.DAOPrecoProduto daoPrecoProduto = new DAOs.DAOPrecoProduto();
         //GUIs.GUIPrecoProdutoPKListagem guiPrecoProdutoPKListagem = new GUIs.GUIPrecoProdutoPKListagem(daoPrecoProduto.listInOrderId());
         //GUIs.GUIPrecoProdutoPK guiPrecoProdutoPK = new //GUIs.GUIPrecoProdutoPK();
+        //GUIStatusFucionario guiStatusFucionario = new GUIStatusFucionario();
+        //DAOs.DAOStatusFuncionario daoStatusFuncionario = new DAOs.DAOStatusFuncionario();
+        //GUIs.GUIStatusFuncionarioListagem guiStatusFucionarioListagem = new GUIs.GUIStatusFuncionarioListagem(daoStatusFuncionario.listInOrderId());
     }
     
 }

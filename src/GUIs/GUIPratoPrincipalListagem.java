@@ -40,7 +40,7 @@ public class GUIPratoPrincipalListagem extends JDialog {
         
         DefaultTableModel model = new DefaultTableModel(dados, colunas);
         JTable tabela = new JTable(model);
-        
+        tabela.setEnabled(false);
         scroll.setViewportView(tabela);
         
         for (int i = 0; i < texto.size(); i++) {
