@@ -1,0 +1,35 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/05/2018, 12:27:29
+    Author     : bianc
+*/
+
+#textoCabecalho{
+    float: none;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left: 400px;
+    font-family: French Script MT, calibri,arial;
+    font-size: 80px;
+}
+
+
+#imgLogo{
+    float: left;
+    height: 10%;
+    width: 10%;
+
+}
+
+.fa-4x{font-size:4em}
+
+body{
+    background-color: #FAE3D9;
+    background-image: url("../paginas/ref.jpg");
+    background-repeat: repeat-y;
+    background-size: 100%;
+}
