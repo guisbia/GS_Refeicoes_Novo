@@ -132,7 +132,7 @@ public class GUIPratoPrincipal extends JDialog {
         }
 
         setTitle("Prato Principal");
-        setSize(600,450);//tamanho da janela
+        setSize(600, 450);//tamanho da janela
         setLayout(new BorderLayout());//informa qual gerenciador de layout será usado
         setBackground(Color.CYAN);//cor do fundo da janela
         Container cp = getContentPane();//container principal, para adicionar nele os outros componentes
@@ -202,7 +202,7 @@ public class GUIPratoPrincipal extends JDialog {
                     String caminho = fc.getSelectedFile().getAbsolutePath();
                     pratoPrincipal = new PratoPrincipal();
                     pratoPrincipal.setFotoPratoPrincipal(caminho);
-                    System.out.println("caminho " + pratoPrincipal.getFotoPratoPrincipal());
+                    System.out.println(" variavel: " + pratoPrincipal.getFotoPratoPrincipal());
                     try {
                         ImageIcon icone = new javax.swing.ImageIcon(img.getAbsolutePath());
                         Image imagemAux;
@@ -223,7 +223,7 @@ public class GUIPratoPrincipal extends JDialog {
                 textFieldIdPratoPrincipal.setText(textFieldIdPratoPrincipal.getText().trim());//caso tenham sido digitados espaços
                 btAbrirImagem.setVisible(false);
                 if (textFieldIdPratoPrincipal.getText().equals("")) {
-                    List<String> listaAuxiliar = daoPratoPrincipal.listInOrderNomeStrings("nome");
+                    List<String> listaAuxiliar = daoPratoPrincipal.listInOrderNomeStrings("id");
                     if (listaAuxiliar.size() > 0) {
                         Point lc = btnRetrieve.getLocationOnScreen();
                         lc.x = lc.x + btnRetrieve.getWidth();
@@ -308,20 +308,23 @@ public class GUIPratoPrincipal extends JDialog {
                 boolean deuRuim = false;
                 try {
                     pratoPrincipal.setIdPratoPrincipal(Integer.valueOf((textFieldIdPratoPrincipal.getText())));
+                    System.out.println(textFieldIdPratoPrincipal.getText());
                 } catch (Exception erro0) {
                     deuRuim = true;
+                    System.out.println(textFieldIdPratoPrincipal.getText());
                     textFieldIdPratoPrincipal.setBackground(Color.red);
                 }
                 pratoPrincipal.setNomePratoPrincipal(String.valueOf(textFieldNomePratoPrincipal.getText()));
                 try {
-                    pratoPrincipal.setStatus(Boolean.valueOf((cbStatus.getText())));
+                    pratoPrincipal.setStatus(Boolean.valueOf((cbStatus.isSelected())));
                 } catch (Exception erro2) {
                     deuRuim = true;
                     cbStatus.setBackground(Color.red);
                 }
                 try {
-                    CopiaImagem copiaImagem = new CopiaImagem();
-                    copiaImagem.copiar(pratoPrincipal.getFotoPratoPrincipal(), "C:/Users/bianc/Documents/NetBeansProjects/BiancaGuiSilva_GsRefeicoes_2/src/imagens/" + textFieldIdPratoPrincipal.getText() + ".jpg");
+                        CopiaImagem copiaImagem = new CopiaImagem();
+                        copiaImagem.copiar(pratoPrincipal.getFotoPratoPrincipal(), "C:/Users/bianc/Documents/NetBeansProjects/BiancaGuiSilva_GsRefeicoes_2/src/imagens/" + textFieldIdPratoPrincipal.getText() + ".jpg");
+                    
                 } catch (Exception e) {
                     System.out.println("Deu ruim na img linha 345");
                     System.out.println(pratoPrincipal.getFotoPratoPrincipal());
@@ -427,7 +430,7 @@ public class GUIPratoPrincipal extends JDialog {
             }
         });
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); //antes de sair do sistema, grava os dados da lista em disco
-     /*   addWindowListener(new WindowAdapter() {
+        /*   addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 dispose();

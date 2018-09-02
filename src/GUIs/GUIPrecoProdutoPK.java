@@ -63,6 +63,9 @@ public class GUIPrecoProdutoPK extends JDialog {
     JPanel pnAvisos = new JPanel();
     JLabel labelAviso = new JLabel("");
 
+    DAOTamanhoMarmita daoTamanhoMarmita = new DAOTamanhoMarmita();
+    TamanhoMarmita tamanhoMarmita = new TamanhoMarmita();
+
     String acao = "";//variavel para facilitar insert e update
     DAOPrecoProdutoPK daoPrecoProdutoPK = new DAOPrecoProdutoPK();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -109,11 +112,11 @@ public class GUIPrecoProdutoPK extends JDialog {
     public GUIPrecoProdutoPK() {
         //dimensao.height = 150;
         setTitle("Preço Produto - PK");
-        setSize(1000,150);//tamanho da janela
+        setSize(1000, 150);//tamanho da janela
         setLayout(new BorderLayout());//informa qual gerenciador de layout será usado
         setBackground(Color.CYAN);//cor do fundo da janela
         Container cp = getContentPane();//container principal, para adicionar nele os outros componentes
-        
+
         try {
             mask = new MaskFormatter("##/##/####");
         } catch (ParseException ex) {
@@ -183,6 +186,13 @@ public class GUIPrecoProdutoPK extends JDialog {
                 precoProduto = new PrecoProduto();
                 textFieldTamanhoMarmitaIdTamanhoMarmita.setText(textFieldTamanhoMarmitaIdTamanhoMarmita.getText().trim());//caso tenham sido digitados espaços
                 DAOPrecoProduto daoPrecoProduto1 = new DAOPrecoProduto();
+                try {
+                    sdf.setLenient(false);
+                    Date data = sdf.parse(textFieldDataPrecoProduto.getText());
+                } catch (Exception e) {
+                    textFieldDataPrecoProduto.setBackground(Color.RED);
+                    labelAviso.setText("Data impossível");
+                }
                 if (textFieldTamanhoMarmitaIdTamanhoMarmita.getText().equals("")) {
                     // DAOProduto daoProduto = new DAOProduto();
                     List<String> listaAuxiliar = daoPrecoProduto.listInOrderNomeStrings("id");
@@ -210,22 +220,42 @@ public class GUIPrecoProdutoPK extends JDialog {
                         PrecoProdutoPK precoProdutoPK = new PrecoProdutoPK();
                         precoProdutoPK.setTamanhoMarmitaIdTamanhoMarmita(Integer.valueOf(textFieldTamanhoMarmitaIdTamanhoMarmita.getText()));
                         precoProdutoPK.setDataPrecoProduto(sdf.parse(textFieldDataPrecoProduto.getText()));
+                        try {
+                            sdf.setLenient(false);
+                            int idProd = Integer.valueOf(textFieldTamanhoMarmitaIdTamanhoMarmita.getText());
+                            Date dtPreco = sdf.parse(textFieldDataPrecoProduto.getText());
+                            precoProduto.setPrecoProdutoPK(new PrecoProdutoPK(dtPreco, idProd));
+
+                        } catch (Exception erro2) {
+                            textFieldTamanhoMarmitaIdTamanhoMarmita.setBackground(Color.red);
+                            textFieldDataPrecoProduto.setBackground(Color.red);
+                        }
                         DAOPrecoProduto daoPrecoProduto = new DAOPrecoProduto();
                         precoProduto = daoPrecoProduto.obter(precoProdutoPK);
-
                         if (precoProduto != null) { //se encontrou na lista                            
                             textFieldPrecoProduto.setText(String.valueOf(precoProduto.getPreco()));
                             atvBotoes(false, true, true, true);
                             habilitarAtributos(true, false);
                             labelAviso.setText("Encontrou - clic [Pesquisar], [Alterar] ou [Excluir]");
                             acao = "encontrou";
+
                         } else {  //não achou na lista
-                            atvBotoes(true, true, false, false);
-                            zerarAtributos();
-                            labelAviso.setText("Não cadastrado - clic [Inserir] ou digite outra id [Pesquisar]");
+                            try {
+                                tamanhoMarmita = daoTamanhoMarmita.obter(Integer.valueOf(textFieldTamanhoMarmitaIdTamanhoMarmita.getText()));
+                                if (tamanhoMarmita == null) {
+                                    labelAviso.setText("Tamanho não cadastrado");
+                                    atvBotoes(false, true, false, false);
+                                } else {
+                                    atvBotoes(true, true, false, false);
+                                    zerarAtributos();
+                                    labelAviso.setText("Não cadastrado - clic [Inserir] ou digite outra id [Pesquisar]");
+                                }
+                            } catch (Exception e) {
+                            }
                         }
                         textFieldTamanhoMarmitaIdTamanhoMarmita.setBackground(Color.green);
                         textFieldDataPrecoProduto.setBackground(Color.green);
+
                     } catch (Exception x) {
                         textFieldTamanhoMarmitaIdTamanhoMarmita.setOpaque(true);
                         textFieldTamanhoMarmitaIdTamanhoMarmita.selectAll();
@@ -321,10 +351,10 @@ public class GUIPrecoProdutoPK extends JDialog {
             public void actionPerformed(ActionEvent ae) {
                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,
                         "Confirma a exclusão do registro?\n "
-                        + precoProduto.getTamanhoMarmita().getNomeTamanhoMarmita()+ "\n"
+                        + precoProduto.getTamanhoMarmita().getNomeTamanhoMarmita() + "\n"
                         + sdf.format(precoProduto.getPrecoProdutoPK().getDataPrecoProduto()) + "\n"
                         + "R$" + precoProduto.getPreco() + "\n",
-                         "Confirm",
+                        "Confirm",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                     labelAviso.setText("Registro excluído...");
 //                    daDoPrecoProdutoPK.remover(produto);

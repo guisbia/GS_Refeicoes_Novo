@@ -174,7 +174,7 @@ public class GUICliente extends JDialog {
                 textFieldIdCliente.setText(textFieldIdCliente.getText().trim());//caso tenham sido digitados espaços
 
                 if (textFieldIdCliente.getText().equals("")) {
-                    List<String> listaAuxiliar = daoCliente.listInOrderNomeStrings("nome");
+                    List<String> listaAuxiliar = daoCliente.listInOrderNomeStrings("id");
                     if (listaAuxiliar.size() > 0) {
                         Point lc = btnRetrieve.getLocationOnScreen();
                         lc.x = lc.x + btnRetrieve.getWidth();
@@ -289,7 +289,7 @@ public class GUICliente extends JDialog {
             public void actionPerformed(ActionEvent ae) {
 
                 acao = "list";
-                GUIClienteListagem guiClienteListagem = new GUIClienteListagem(daoCliente.listInOrderNome());
+                GUIClienteListagem guiClienteListagem = new GUIClienteListagem(daoCliente.listInOrderId());
             }
         });
         btnUpdate.addActionListener(new ActionListener() {

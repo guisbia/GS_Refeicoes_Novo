@@ -1,5 +1,7 @@
 package GUIs;
 
+import DAOs.DAOPrecoProduto;
+import DAOs.DAOPrecoProdutoPK;
 import Entidades.PrecoProduto;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -60,5 +62,9 @@ public class GUIPrecoProdutoPKListagem extends JDialog {
 
         setLocationRelativeTo(null);
         setVisible(true);//faz a janela ficar visÃ­vel        
+    }
+    public static void main(String[] args) {
+        DAOPrecoProduto daoPrecoProdutoPK = new DAOPrecoProduto();
+        new GUIPrecoProdutoPKListagem( daoPrecoProdutoPK.listInOrderId());
     }
 }

@@ -115,7 +115,7 @@ public class GUIMarmita extends JDialog {
     public GUIMarmita() {
 
         setTitle("CRUD - Marmita");
-        setSize(500, 500);//tamanho da janela
+        setSize(500, 300);//tamanho da janela
         setLayout(new BorderLayout());//informa qual gerenciador de layout será usado
         setLocationRelativeTo(null);
         setBackground(Color.CYAN);//cor do fundo da janela
@@ -224,7 +224,7 @@ public class GUIMarmita extends JDialog {
                 textFieldIdMarmita.setText(textFieldIdMarmita.getText().trim());//caso tenham sido digitados espaços
 
                 if (textFieldIdMarmita.getText().equals("")) {
-                    List<String> listaAuxiliar = daoMarmita.listInOrderNomeStrings("nome");
+                    List<String> listaAuxiliar = daoMarmita.listInOrderNomeStrings("id");
                     if (listaAuxiliar.size() > 0) {
                         Point lc = btnRetrieve.getLocationOnScreen();
                         lc.x = lc.x + btnRetrieve.getWidth();
@@ -353,7 +353,7 @@ public class GUIMarmita extends JDialog {
             public void actionPerformed(ActionEvent ae) {
 
                 acao = "list";
-                GUIMarmitaListagem guiMarmitaListagem = new GUIMarmitaListagem(daoMarmita.listInOrderNome());
+                GUIMarmitaListagem guiMarmitaListagem = new GUIMarmitaListagem(daoMarmita.listInOrderId());
             }
         });
         btnUpdate.addActionListener(new ActionListener() {

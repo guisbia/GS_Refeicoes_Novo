@@ -6,7 +6,9 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,13 +29,16 @@ import javax.persistence.Table;
     @NamedQuery(name = "Marmita.findAll", query = "SELECT m FROM Marmita m")})
 public class Marmita implements Serializable {
 
+    @Column(name = "status")
+    private boolean status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "marmita")
+    private List<PedidoHasMarmita> pedidoHasMarmitaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id_marmita")
     private Integer idMarmita;
-    @Column(name = "status")
-    private boolean status;
     @JoinColumn(name = "prato_principal_id_prato_principal", referencedColumnName = "id_prato_principal")
     @ManyToOne(optional = false)
     private PratoPrincipal pratoPrincipalIdPratoPrincipal;
@@ -55,13 +61,6 @@ public class Marmita implements Serializable {
         this.idMarmita = idMarmita;
     }
 
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 
     public PratoPrincipal getPratoPrincipalIdPratoPrincipal() {
         return pratoPrincipalIdPratoPrincipal;
@@ -102,6 +101,23 @@ public class Marmita implements Serializable {
     @Override
     public String toString() {
         return "Entidades.Marmita[ idMarmita=" + idMarmita + " ]";
+    }
+
+
+    public List<PedidoHasMarmita> getPedidoHasMarmitaList() {
+        return pedidoHasMarmitaList;
+    }
+
+    public void setPedidoHasMarmitaList(List<PedidoHasMarmita> pedidoHasMarmitaList) {
+        this.pedidoHasMarmitaList = pedidoHasMarmitaList;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
     
 }

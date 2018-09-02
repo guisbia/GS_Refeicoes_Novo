@@ -11,8 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,12 +29,12 @@ public class PratoPrincipal implements Serializable {
 
     @Column(name = "status")
     private boolean status;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pratoPrincipalIdPratoPrincipal")
     private List<Marmita> marmitaList;
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_prato_principal")
     private Integer idPratoPrincipal;
@@ -53,11 +51,9 @@ public class PratoPrincipal implements Serializable {
         this.idPratoPrincipal = idPratoPrincipal;
     }
 
-    public PratoPrincipal(Integer idPratoPrincipal, String nomePratoPrincipal, boolean status, String fotoPratoPrincipal) {
+    public PratoPrincipal(Integer idPratoPrincipal, String nomePratoPrincipal) {
         this.idPratoPrincipal = idPratoPrincipal;
         this.nomePratoPrincipal = nomePratoPrincipal;
-        this.status = status;
-        this.fotoPratoPrincipal = fotoPratoPrincipal;
     }
 
     public Integer getIdPratoPrincipal() {
@@ -110,20 +106,20 @@ public class PratoPrincipal implements Serializable {
         return "Entidades.PratoPrincipal[ idPratoPrincipal=" + idPratoPrincipal + " ]";
     }
 
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public List<Marmita> getMarmitaList() {
         return marmitaList;
     }
 
     public void setMarmitaList(List<Marmita> marmitaList) {
         this.marmitaList = marmitaList;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
     
 }

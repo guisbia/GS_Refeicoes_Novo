@@ -192,4 +192,8 @@ public class GUIMenu extends JFrame {
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
+    
+    public static void main(String[] args) {
+         GUIMenu guiMenu = new GUIMenu();
+    }
 }

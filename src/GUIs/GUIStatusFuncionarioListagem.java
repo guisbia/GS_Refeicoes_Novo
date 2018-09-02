@@ -25,7 +25,7 @@ public class GUIStatusFuncionarioListagem extends JDialog {
     
     public GUIStatusFuncionarioListagem(List<StatusFuncionario> texto) {
         setTitle("Listagem de Status Funcionario");
-        setSize(300, 200);//tamanho da janela
+        setSize(300, 150);//tamanho da janela
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);//libera ao sair (tira da memÃ³ria a classe
         setLayout(new BorderLayout());//informa qual gerenciador de layout serÃ¡ usado
         setBackground(Color.CYAN);//cor do fundo da janela

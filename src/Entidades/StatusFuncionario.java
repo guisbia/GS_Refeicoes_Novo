@@ -27,9 +27,6 @@ import javax.persistence.Table;
     @NamedQuery(name = "StatusFuncionario.findAll", query = "SELECT s FROM StatusFuncionario s")})
 public class StatusFuncionario implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "statusFuncionarioIdStatus")
-    private List<Funcionario> funcionarioList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -38,6 +35,8 @@ public class StatusFuncionario implements Serializable {
     @Basic(optional = false)
     @Column(name = "nome_status")
     private String nomeStatus;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "statusFuncionarioIdStatus")
+    private List<Funcionario> funcionarioList;
 
     public StatusFuncionario() {
     }
@@ -67,6 +66,14 @@ public class StatusFuncionario implements Serializable {
         this.nomeStatus = nomeStatus;
     }
 
+    public List<Funcionario> getFuncionarioList() {
+        return funcionarioList;
+    }
+
+    public void setFuncionarioList(List<Funcionario> funcionarioList) {
+        this.funcionarioList = funcionarioList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -90,14 +97,6 @@ public class StatusFuncionario implements Serializable {
     @Override
     public String toString() {
         return "Entidades.StatusFuncionario[ idStatus=" + idStatus + " ]";
-    }
-
-    public List<Funcionario> getFuncionarioList() {
-        return funcionarioList;
-    }
-
-    public void setFuncionarioList(List<Funcionario> funcionarioList) {
-        this.funcionarioList = funcionarioList;
     }
     
 }

@@ -2,13 +2,15 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="UP" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>Entidades.PratoPrincipal</class>
-    <class>Entidades.TamanhoMarmita</class>
-    <class>Entidades.PrecoProduto</class>
+    <class>Entidades.Cliente</class>
     <class>Entidades.StatusFuncionario</class>
     <class>Entidades.Funcionario</class>
-    <class>Entidades.Cliente</class>
+    <class>Entidades.TamanhoMarmita</class>
+    <class>Entidades.PratoPrincipal</class>
+    <class>Entidades.PrecoProduto</class>
     <class>Entidades.Marmita</class>
+    <class>Entidades.Pedido</class>
+    <class>Entidades.PedidoHasMarmita</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gs_refeicoes?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

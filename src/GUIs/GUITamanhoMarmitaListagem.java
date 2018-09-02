@@ -25,7 +25,7 @@ public class GUITamanhoMarmitaListagem extends JDialog {
 
     public GUITamanhoMarmitaListagem(List<TamanhoMarmita> texto) {
         setTitle("Listagem de Tamanho Marmita");
-        setSize(600, 200);//tamanho da janela
+        setSize(300, 180);//tamanho da janela
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);//libera ao sair (tira da memÃ³ria a classe
         setLayout(new BorderLayout());//informa qual gerenciador de layout serÃ¡ usado
         setBackground(Color.CYAN);//cor do fundo da janela
@@ -57,5 +57,10 @@ public class GUITamanhoMarmitaListagem extends JDialog {
 
         setLocationRelativeTo(null);
         setVisible(true);//faz a janela ficar visÃ­vel        
+    }
+    
+    public static void main(String[] args) {
+        DAOs.DAOTamanhoMarmita daoTamanhoMarmita = new DAOs.DAOTamanhoMarmita();
+        new GUITamanhoMarmitaListagem( daoTamanhoMarmita.listInOrderId());
     }
 }
