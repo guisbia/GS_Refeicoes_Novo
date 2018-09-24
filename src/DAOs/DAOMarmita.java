@@ -18,13 +18,18 @@ private List<Marmita> lista = new ArrayList<>();    public DAOMarmita(){
             return 1;
         }
     }
+    
+    public Marmita obter(int id) {
+        return em.find(Marmita.class, id);
+    }
+
 
     public List<Marmita> listByNome(String nome) {
         return em.createQuery("SELECT e FROM Marmita e WHERE e.idMarmita) LIKE :nome").setParameter("nome", "%" + nome + "%").getResultList();
     }
 
     public List<Marmita> listById(int id) {
-        return em.createQuery("SELECT e FROM Marmita + e WHERE e.pratoPrincipalIdPratoPrincipal= :id").setParameter("id", id).getResultList();
+        return em.createQuery("SELECT e FROM Marmita e WHERE e.idMarmita= :id").setParameter("id", id).getResultList();
     }
 
     public List<Marmita> listInOrderNome() {

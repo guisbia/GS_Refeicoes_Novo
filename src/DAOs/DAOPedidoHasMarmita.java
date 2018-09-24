@@ -39,7 +39,7 @@ public class DAOPedidoHasMarmita extends DAOGenerico<PedidoHasMarmita> {
     }
 
     public List<PedidoHasMarmita> listInOrderId() {
-        return em.createQuery("SELECT e FROM PedidoHasMarmita e ORDER BY e.idPedidoHasMarmita").getResultList();
+        return em.createQuery("SELECT e FROM PedidoHasMarmita e ORDER BY e.pedido.idPedido").getResultList();
     }
 
     public List<String> listInOrderNomeStrings(String qualOrdem) {
@@ -59,9 +59,9 @@ public class DAOPedidoHasMarmita extends DAOGenerico<PedidoHasMarmita> {
 
     public static void main(String[] args) {
         DAOPedidoHasMarmita daoPedidoHasMarmita = new DAOPedidoHasMarmita();
-        List<PedidoHasMarmita> listaPedidoHasMarmita = daoPedidoHasMarmita.list();
+        List<PedidoHasMarmita> listaPedidoHasMarmita = daoPedidoHasMarmita.listById(1);
         for (PedidoHasMarmita x : listaPedidoHasMarmita) {
-            System.out.println(x.getQtde() + "-" + x.getValor());
+            System.out.println(x.getPedidoHasMarmitaPK().getPedidoIdPedido()+ " - "+x.getPedidoHasMarmitaPK().getMarmitaIdMarmita()+ " - "+ x.getQtde() + "-" + x.getValor() + " - "+ x.getDesconto());
         }
     }
 }

@@ -1,5 +1,6 @@
 package GUIs;
 
+import DAOs.DAOPedidoHasMarmita;
 import static com.sun.glass.ui.Cursor.setVisible;
 import java.awt.Color;
 import java.awt.Container;
@@ -23,8 +24,6 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
  * @author Bianca
  */
 public class GUIMenu extends JFrame {
-    
-   
 
     Container cp;
 
@@ -48,13 +47,17 @@ public class GUIMenu extends JFrame {
     JMenuItem listaCliente = new JMenuItem("Cliente");
     JMenuItem listaMarmita = new JMenuItem("Marmita");
 
+    JMenu menu3 = new JMenu("Pedidos");
+    JMenuItem fazerPedidos = new JMenuItem("Fazer Pedidos");
+    JMenuItem verPedidos = new JMenuItem("Ver Pedidos");
+    JMenuItem verItensPedidos = new JMenuItem("Ver Itens dos Pedidos");
 
     ImageIcon img = new ImageIcon("ref.jpg");
     JLabel lbImg = new JLabel(img);
 
     public GUIMenu() {
         setIcon();
-        
+
         setTitle("G.S. Refeições");
         setSize(800, 550);
         setLocationRelativeTo(null);
@@ -80,6 +83,11 @@ public class GUIMenu extends JFrame {
         menu2.add(listaCliente);
         menu2.add(listaMarmita);
 
+        barra.add(menu3);
+        menu3.add(fazerPedidos);
+        menu3.add(verPedidos);
+        menu3.add(verItensPedidos);
+
         cp.add(lbImg);
 
         cadastroPratoPrincipal.addActionListener(new ActionListener() {
@@ -88,28 +96,28 @@ public class GUIMenu extends JFrame {
                 GUIPratoPrincipal guiPratoPrincipal = new GUIPratoPrincipal();
             }
         });
-        
+
         cadastroTamanhoMarmita.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GUITamanhoMarmita guiTamanhoMarmita = new GUITamanhoMarmita();
             }
         });
-        
+
         cadastroPrecoTamanho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GUIPrecoProdutoPK guiPrecoProdutoPK = new GUIPrecoProdutoPK();
             }
         });
-        
+
         cadastroStatusFuncionario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GUIStatusFucionario guiStatusFucionario = new GUIStatusFucionario();
             }
         });
-        
+
         cadastroFuncionario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,7 +136,7 @@ public class GUIMenu extends JFrame {
                 GUIMarmita guiMarmita = new GUIMarmita();
             }
         });
-        
+
         listaPratoPrincipal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -141,18 +149,18 @@ public class GUIMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DAOs.DAOTamanhoMarmita daoTamanhoMarmita = new DAOs.DAOTamanhoMarmita();
-                 GUITamanhoMarmitaListagem guiTamanhoMarmitaListagem = new GUITamanhoMarmitaListagem(daoTamanhoMarmita.listInOrderId());
+                GUITamanhoMarmitaListagem guiTamanhoMarmitaListagem = new GUITamanhoMarmitaListagem(daoTamanhoMarmita.listInOrderId());
             }
         });
-        
+
         listaPrecoTamanho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DAOs.DAOPrecoProduto daoPrecoProduto = new DAOs.DAOPrecoProduto();
-                 GUIPrecoProdutoPKListagem guiPrecoProdutoPKListagem = new GUIPrecoProdutoPKListagem(daoPrecoProduto.listInOrderId());
+                GUIPrecoProdutoPKListagem guiPrecoProdutoPKListagem = new GUIPrecoProdutoPKListagem(daoPrecoProduto.listInOrderId());
             }
         });
-        
+
         listaStatusFuncionario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -160,7 +168,7 @@ public class GUIMenu extends JFrame {
                 GUIStatusFuncionarioListagem guiStatusFuncionarioListagem = new GUIStatusFuncionarioListagem(daoStatusFuncionario.listInOrderId());
             }
         });
-        
+
         listaFuncionario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -168,7 +176,7 @@ public class GUIMenu extends JFrame {
                 GUIFuncionarioListagem guiFuncionarioListagem = new GUIFuncionarioListagem(daoFuncionario.listInOrderId());
             }
         });
-        
+
         listaCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -176,7 +184,7 @@ public class GUIMenu extends JFrame {
                 GUIClienteListagem guiClienteListagem = new GUIClienteListagem(daoCliente.listInOrderId());
             }
         });
-        
+
         listaMarmita.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -184,6 +192,30 @@ public class GUIMenu extends JFrame {
                 GUIMarmitaListagem guiMarmitaListagem = new GUIMarmitaListagem(daoMarmita.listInOrderId());
             }
         });
+
+        fazerPedidos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                GUIPedido guiPedido = new GUIPedido();
+            }
+        });
+        
+        verPedidos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                DAOs.DAOPedido daoPedido = new DAOs.DAOPedido();
+                GUIPedidoListagem guiPedidoListagem = new GUIPedidoListagem(daoPedido.listInOrderId());
+            }
+        });
+        
+        verItensPedidos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                DAOs.DAOPedidoHasMarmita daoPedidoHasMarmita = new DAOs.DAOPedidoHasMarmita();
+                GUIPedidoHasMarmitaListagem guiPedidoHasMarmitaListagem = new GUIPedidoHasMarmitaListagem(daoPedidoHasMarmita.listInOrderId());
+            }
+        });
+        
         
         setResizable(false);
         setVisible(true);
@@ -192,8 +224,8 @@ public class GUIMenu extends JFrame {
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
     }
-    
+
     public static void main(String[] args) {
-         GUIMenu guiMenu = new GUIMenu();
+        GUIMenu guiMenu = new GUIMenu();
     }
 }

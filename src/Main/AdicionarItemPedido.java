@@ -97,6 +97,33 @@ public class AdicionarItemPedido { //pedidoHasMarmita
         } else { // já está na tabela, então atualizar
             daoPedidoHasMarmita.atualizar(pedidoHasMarmita);
         }
+        
+        /////
+        marmita = daoMarmita.obter(3);
+        if (marmita != null) {
+            System.out.println("Produto: " + marmita.getIdMarmita()
+                    + "\nPrato Principal:" + marmita.getPratoPrincipalIdPratoPrincipal().getNomePratoPrincipal()
+                    + "\nTamanho:" + marmita.getTamanhoMarmitaIdTamanhoMarmita().getNomeTamanhoMarmita()
+                    + "\nStatus:" + marmita.getStatus()
+                    + "\nValor:" + marmita.getTamanhoMarmitaIdTamanhoMarmita().getPrecoProdutoList().get(marmita.getTamanhoMarmitaIdTamanhoMarmita().getPrecoProdutoList().size() - 1).getPreco()//ultimo preço cadastrado
+            );
+            valorEtiqueta = marmita.getTamanhoMarmitaIdTamanhoMarmita().getPrecoProdutoList().get(marmita.getTamanhoMarmitaIdTamanhoMarmita().getPrecoProdutoList().size() - 1).getPreco();
+        }
+
+        //tenho o pedido e tenho o marmita
+        pedidoHasMarmitaPK = new PedidoHasMarmitaPK(pedido.getIdPedido(), marmita.getIdMarmita());
+        pedidoHasMarmita = daoPedidoHasMarmita.obter(pedidoHasMarmitaPK);//procura se o item do pedido já foi adicionado anteriormente
+
+        valorUnitario = 8.90;
+        quantidade = 3;
+        pedidoHasMarmita = new PedidoHasMarmita(pedidoHasMarmitaPK, quantidade, valorUnitario);
+        pedidoHasMarmita.setDesconto(valorEtiqueta - valorUnitario);
+
+        if (pedidoHasMarmita == null) {//não está na tabela de itens
+            daoPedidoHasMarmita.inserir(pedidoHasMarmita);
+        } else { // já está na tabela, então atualizar
+            daoPedidoHasMarmita.atualizar(pedidoHasMarmita);
+        }
 
         //Listar o pedido e calcular o total
         pedido = daoPedido.obter(1);//obter o pedido já atualizado com os itens
