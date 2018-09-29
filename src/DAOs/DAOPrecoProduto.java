@@ -23,7 +23,7 @@ public class DAOPrecoProduto extends DAOGenerico<PrecoProduto> {
     }
 
     public List<PrecoProduto> listById(int id) {
-        return em.createQuery("SELECT e FROM PrecoProduto + e WHERE e.tamanhoMarmita. = :id").setParameter("id", id).getResultList();
+        return em.createQuery("SELECT e FROM PrecoProduto e WHERE e.precoProdutoPK.tamanhoMarmitaIdTamanhoMarmita = :id").setParameter("id", id).getResultList();
     }
 
     public List<PrecoProduto> listInOrderNome() {

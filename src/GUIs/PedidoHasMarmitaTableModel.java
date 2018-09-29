@@ -64,7 +64,7 @@ public class PedidoHasMarmitaTableModel extends AbstractTableModel {
             case 4:
                 return p.getDesconto();
             case 5:
-                return p.getQtde() * p.getValor();
+                return (p.getQtde() * p.getValor());
             default:
                 throw new IndexOutOfBoundsException("Coluna Inválida!");
         }
@@ -72,7 +72,7 @@ public class PedidoHasMarmitaTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if (columnIndex == 0 | columnIndex == 1) {
+        if (columnIndex == 0 | columnIndex == 1 | columnIndex == 5) {
             return false;
         }
         return true;
@@ -97,17 +97,15 @@ public class PedidoHasMarmitaTableModel extends AbstractTableModel {
             case 2:
                 p.setQtde((int) aValue);
                 break;
-            case 3:
+            case 3: //valor já com desconto
                 p.setValor((double) aValue);
                 break;
-            case 4:
+            case 4: //desconto  (valor cadastrado - valor colocado)
                 DAOMarmita daoMarmita = new DAOMarmita();
-               // Marmita marmita = daoMarmita.obter(p.getMarmita().getIdMarmita());
                 Marmita marmita = daoMarmita.obter(p.getPedidoHasMarmitaPK().getMarmitaIdMarmita());
 
                 double valorEtiqueta = marmita.getTamanhoMarmitaIdTamanhoMarmita().getPrecoProdutoList().get(marmita.getTamanhoMarmitaIdTamanhoMarmita().getPrecoProdutoList().size() - 1).getPreco();
-                double y = valorEtiqueta - p.getValor();
-                p.setDesconto((double) y);
+                p.setDesconto((double) valorEtiqueta - p.getValor());
                 break;
             case 5:
                 double x = p.getQtde() * p.getValor();

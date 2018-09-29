@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,11 +83,15 @@ public class GUIPedido extends JDialog {
     private JDateTextField textFieldDataPedido = new JDateTextField();
     private JLabel labelDataPedido = new JLabel("DataPedido");
 
+    private JLabel labelValorTotal = new JLabel("Valor total");
+    private JTextField textFieldValorTotal = new JTextField(20);
+
     JPanel pnAvisos = new JPanel();
     JLabel labelAviso = new JLabel("");
 
     JPanel painelItensPedido = new JPanel();
     JPanel painelPedidoGeral = new JPanel();
+    JPanel painelTotal = new JPanel();
 
     private final JPanel painelAvisosItensPedido = new JPanel();
     private final JButton btnAddItensPedido = new JButton("Adicionar");
@@ -200,8 +205,14 @@ public class GUIPedido extends JDialog {
         painelItensPedido.setLayout(new BorderLayout());
         painelItensPedido.add(BorderLayout.NORTH, painelAvisosItensPedido);
 
+        painelTotal.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelTotal.add(labelValorTotal);
+        painelTotal.add(textFieldValorTotal);
+        textFieldValorTotal.setEditable(false);
+
         cp.add(painelPedidoGeral, BorderLayout.NORTH);
         cp.add(painelItensPedido, BorderLayout.CENTER);
+        cp.add(painelTotal, BorderLayout.SOUTH);
         textFieldIdPedido.requestFocus();
         textFieldIdPedido.selectAll();
         textFieldIdPedido.setBackground(Color.GREEN);
@@ -227,23 +238,6 @@ public class GUIPedido extends JDialog {
 
         btnAddItensPedido.setEnabled(false);
 
-//-------------- FK Cliente ------------------------
-//        TableColumn tipoColumn0 = table.getColumnModel().getColumn(1);
-//        JComboBox comboBox0 = new JComboBox();
-//        DAOMarmita daoMarmita = new DAOMarmita();
-//        List<PedidoHasMarmita> listaPedidosId = new ArrayList<>();
-//        List<Marmita> listaMarmitasUsadas = new ArrayList<>();
-//        listaPedidosId = daoPedidoHasMarmita.listById(Integer.valueOf(textFieldIdPedido.getText()));
-//        for (int i = 0; i < listaPedidosId.size(); i++) {
-//            Marmita marmitaAdd = daoMarmita.obter(listaPedidosId.get(i).getPedidoHasMarmitaPK().getMarmitaIdMarmita());
-//            listaMarmitasUsadas.add(marmitaAdd);
-//        }
-//        List<Marmita> ltc0 = listarMarmitasDisponíveis(listaMarmitasUsadas, Integer.valueOf(textFieldIdPedido.getText()));
-//        for (int i = 0; i < ltc0.size(); i++) {
-//            comboBox0.addItem(ltc0.get(i).getIdMarmita());;
-//        }
-//        tipoColumn0.setCellEditor(new DefaultCellEditor(comboBox0));
-////        
 //--------------inserir---------------
         InputMap im = table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         ActionMap actionMap = table.getActionMap();
@@ -314,28 +308,19 @@ public class GUIPedido extends JDialog {
                             marmita = daoMarmita.obter(Integer.valueOf(aux[0]));
                             pedidoHasMarmitaPK.setMarmitaIdMarmita(marmita.getIdMarmita());
                             pedidoHasMarmita.setPedidoHasMarmitaPK(pedidoHasMarmitaPK);
-                            pedidoHasMarmita.setQtde(0);
-                            pedidoHasMarmita.setValor(0.0);
+                            pedidoHasMarmita.setQtde(1);
+                            DAOPrecoProduto daoPrecoProduto = new DAOPrecoProduto();
+                            List<PrecoProduto> listaPrecos = daoPrecoProduto.listById(marmita.getTamanhoMarmitaIdTamanhoMarmita().getIdTamanhoMarmita()); //id é tamanho
+                            pedidoHasMarmita.setValor(listaPrecos.get((listaPrecos.size()-1)).getPreco());
                             pedidoHasMarmita.setDesconto(0.0);
                             daoPedidoHasMarmita.inserir(pedidoHasMarmita);
                             tableModel.onAdd(pedidoHasMarmita);
                             tableModel.fireTableDataChanged();
 
                         } else {
-//                            textFieldClienteIdCliente.requestFocus();
-//                            textFieldClienteIdCliente.selectAll();
                             JOptionPane.showMessageDialog(cp, "Escolha uma marmita.");
                         }
 
-//                        marmita = listaMarmitasDisponiveis.get(0);
-//                        pedidoHasMarmitaPK.setMarmitaIdMarmita(marmita.getIdMarmita());
-//                        pedidoHasMarmita.setPedidoHasMarmitaPK(pedidoHasMarmitaPK);
-//                        pedidoHasMarmita.setQtde(0);
-//                        pedidoHasMarmita.setValor(0.0);
-//                        pedidoHasMarmita.setDesconto(0.0);
-//                        daoPedidoHasMarmita.inserir(pedidoHasMarmita);
-//                        tableModel.onAdd(pedidoHasMarmita);
-//                        tableModel.fireTableDataChanged();
                     } else {
                         JOptionPane.showMessageDialog(cp, "Não há mais Marmitas para usar, altere as já existentes ou cadastre novas.");
                     }
@@ -377,6 +362,12 @@ public class GUIPedido extends JDialog {
                     table.requestFocus();
                 }
                 tableModel.fireTableDataChanged();
+                Double valorTotal = 0.0;
+                for (int i = 0; i < table.getRowCount(); i++) {
+                    valorTotal += Double.valueOf(table.getValueAt(i, 5).toString());
+                }
+                textFieldValorTotal.setText(String.valueOf(valorTotal));
+
             }
         }
         );
@@ -400,11 +391,13 @@ public class GUIPedido extends JDialog {
                         p.setDesconto(x.getDesconto());
                         lista.add(p);
                     }
-//                    for (PedidoHasMarmita x : lista) {
-//                        System.out.println(x.getPedidoHasMarmitaPK().getPedidoIdPedido() + " - " + x.getPedidoHasMarmitaPK().getMarmitaIdMarmita() + " - " + x.getQtde() + "-" + x.getValor() + " - " + x.getDesconto());
-//                    }
                     tableModel.setDados(lista);
                     tableModel.fireTableDataChanged();
+                    Double valorTotal = 0.0;
+                    for (int i = 0; i < table.getRowCount(); i++) {
+                        valorTotal += Double.valueOf(table.getValueAt(i, 5).toString());
+                    }
+                    textFieldValorTotal.setText(String.valueOf(valorTotal));
 
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(cp, "Erro ao carregar os dados..." + ex.getMessage());
@@ -433,10 +426,12 @@ public class GUIPedido extends JDialog {
                         c.setValor(tableModel.getValue(table.getSelectedRow()).getValor());
                         c.setDesconto(tableModel.getValue(table.getSelectedRow()).getDesconto());
                         daoPedidoHasMarmita.atualizar(c);
-//                        System.out.println("PEDIDO ID PEDIDO: " + c);
-//                        System.out.println("PEDIDO ID PEDIDO: " + c.getQtde() + "- "+ c.getValor());
                     }
-
+                    Double valorTotal = 0.0;
+                    for (int i = 0; i < table.getRowCount(); i++) {
+                        valorTotal += Double.valueOf(table.getValueAt(i, 5).toString());
+                    }
+                    textFieldValorTotal.setText(String.valueOf(valorTotal));
                     // PedidoHasMarmita c = tableModel.getValue(table.getSelectedRow());
                 }
                 //}
@@ -615,10 +610,10 @@ public class GUIPedido extends JDialog {
             public void actionPerformed(ActionEvent ae
             ) {
                 zerarAtributos();
-                habilitarAtributos(false,true, true, true);
+                habilitarAtributos(false, true, true, true);
                 textFieldFuncionarioIdFuncionario.requestFocus();
                 mostrarBotoes(false);
-             //   btnAddItensPedido.setEnabled(true);
+                //   btnAddItensPedido.setEnabled(true);
                 labelAviso.setText("Preencha os campos e clic [Salvar] ou clic [Cancelar]");
                 acao = "insert";
             }
