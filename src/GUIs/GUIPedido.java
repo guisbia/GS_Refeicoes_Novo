@@ -112,7 +112,7 @@ public class GUIPedido extends JDialog {
     Pedido pedido;
 
     List<Marmita> listaMarmitasDisponiveis = new ArrayList<>();
-
+    
     int idDoPedido = 0;
 
     private void atvBotoes(boolean c, boolean r, boolean u, boolean d) {
@@ -155,7 +155,7 @@ public class GUIPedido extends JDialog {
     public GUIPedido() {
 
         setTitle("CRUD - Pedido");
-        setSize(600, 500);//tamanho da janela
+        setSize(600, 400);//tamanho da janela
         setLayout(new BorderLayout());//informa qual gerenciador de layout será usado
         setLocationRelativeTo(null);
         setBackground(Color.CYAN);//cor do fundo da janela
@@ -192,7 +192,7 @@ public class GUIPedido extends JDialog {
         painelPedido.add(labelDataPedido);
         painelPedido.add(textFieldDataPedido);
         pnAvisos.add(labelAviso);
-        pnAvisos.setBackground(Color.yellow);
+        pnAvisos.setBackground(Color.lightGray);
 //        cp.add(Toolbar1, BorderLayout.NORTH);
 //        cp.add(painelPedido, BorderLayout.CENTER);
 //        cp.add(pnAvisos, BorderLayout.SOUTH);
@@ -229,7 +229,7 @@ public class GUIPedido extends JDialog {
         painelAvisosItensPedido.add(new JLabel("   --   "));
         painelAvisosItensPedido.add(new JLabel("Tecla DEL = Exclui registro selecionado"));
         painelAvisosItensPedido.add(btnAddItensPedido);
-        painelAvisosItensPedido.setBackground(Color.cyan);
+        painelAvisosItensPedido.setBackground(Color.white);
 
         table.setDefaultEditor(Date.class, new DateEditor());
         table.setDefaultRenderer(Date.class, new DateRenderer());
@@ -548,7 +548,7 @@ public class GUIPedido extends JDialog {
                 textFieldIdPedido.setText(textFieldIdPedido.getText().trim());//caso tenham sido digitados espaços
 
                 if (textFieldIdPedido.getText().equals("")) {
-                    List<String> listaAuxiliar = daoPedido.listInOrderNomeStrings("nome");
+                    List<String> listaAuxiliar = daoPedido.listInOrderNomeStrings("id");
                     if (listaAuxiliar.size() > 0) {
                         Point lc = btnRetrieve.getLocationOnScreen();
                         lc.x = lc.x + btnRetrieve.getWidth();
@@ -578,9 +578,7 @@ public class GUIPedido extends JDialog {
                             textFieldClienteIdCliente.setText(String.valueOf(pedido.getClienteIdCliente().getIdCliente() + "-" + pedido.getClienteIdCliente().getNomeCliente()));
                             textFieldDataPedido.setText(sdf.format(pedido.getDataPedido()));
                             atvBotoes(false, true, true, true);
-                            habilitarAtributos(true,
-                                    false, false, false
-                            );
+                            habilitarAtributos(true,false, false, false);
                             labelAviso.setText("Encontrou - clic [Pesquisar], [Alterar] ou [Excluir]");
                             acao = "encontrou";
                         } else {
@@ -632,6 +630,7 @@ public class GUIPedido extends JDialog {
                 }
                 try {
                     pedido.setIdPedido(Integer.valueOf((textFieldIdPedido.getText())));
+                    //pedido.setIdPedido(daoPedido.autoIdPedido());
                 } catch (Exception erro0) {
                     deuRuim = true;
                     textFieldIdPedido.setBackground(Color.red);

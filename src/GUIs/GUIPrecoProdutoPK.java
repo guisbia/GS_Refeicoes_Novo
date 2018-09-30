@@ -357,7 +357,7 @@ public class GUIPrecoProdutoPK extends JDialog {
                         "Confirm",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                     labelAviso.setText("Registro excluído...");
-//                    daDoPrecoProdutoPK.remover(produto);
+                    daoPrecoProduto.remover(precoProduto);
                     zerarAtributos();
                     mostrarBotoes(true);
                     atvBotoes(false, true, false, false);

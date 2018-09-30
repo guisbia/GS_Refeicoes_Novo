@@ -161,7 +161,7 @@ public class GUITamanhoMarmita extends JDialog {
                 tamanhoMarmita = new TamanhoMarmita();
                 textFieldIdtamanhomarmita.setText(textFieldIdtamanhomarmita.getText().trim());//caso tenham sido digitados espaços
                 if (textFieldIdtamanhomarmita.getText().equals("")) {
-                    List<String> listaAuxiliar = daoTamanhoMarmita.listInOrderNomeStrings("nome");
+                    List<String> listaAuxiliar = daoTamanhoMarmita.listInOrderNomeStrings("id");
                     if (listaAuxiliar.size() > 0) {
                         Point lc = btnRetrieve.getLocationOnScreen();
                         lc.x = lc.x + btnRetrieve.getWidth();
@@ -294,8 +294,8 @@ public class GUITamanhoMarmita extends JDialog {
                     zerarAtributos();
                     mostrarBotoes(true);
                     atvBotoes(false, true, false, false);
-                    textFieldNometamanhomarmita.requestFocus();
-                    textFieldNometamanhomarmita.selectAll();
+                    textFieldIdtamanhomarmita.requestFocus();
+                    textFieldIdtamanhomarmita.selectAll();
                 }
             }
         });

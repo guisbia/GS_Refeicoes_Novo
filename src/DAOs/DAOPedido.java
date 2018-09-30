@@ -1,12 +1,17 @@
 package DAOs;
 
 import Entidades.Pedido;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DAOPedido extends DAOGenerico<Pedido> {
 
-private List<Pedido> lista = new ArrayList<>();    public DAOPedido(){
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+    private List<Pedido> lista = new ArrayList<>();
+
+    public DAOPedido() {
         super(Pedido.class);
     }
 
@@ -45,16 +50,16 @@ private List<Pedido> lista = new ArrayList<>();    public DAOPedido(){
 
         List<String> ls = new ArrayList<>();
         for (int i = 0; i < lf.size(); i++) {
-            ls.add(lf.get(i).getIdPedido() + "-" + lf.get(i).getFuncionarioIdFuncionario());
+            ls.add(lf.get(i).getIdPedido() + "-" + sdf.format(lf.get(i).getDataPedido()) + "-" + lf.get(i).getClienteIdCliente().getNomeCliente());
         }
         return ls;
     }
 
-
-public static void main(String[] args) {
+    public static void main(String[] args) {
         DAOPedido daoPedido = new DAOPedido();
         List<Pedido> listaPedido = daoPedido.list();
         for (Pedido x : listaPedido) {
-            System.out.println(x.getIdPedido()+"-"+x.getFuncionarioIdFuncionario());
+            System.out.println(x.getIdPedido() + "-" + x.getFuncionarioIdFuncionario());
         }
-    }}
+    }
+}
